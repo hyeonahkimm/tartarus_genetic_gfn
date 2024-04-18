@@ -38,9 +38,14 @@ def train_agent(restore_prior_from='data/Prior.ckpt',
                 save_dir=None, learning_rate=0.0005,
                 batch_size=64, n_steps=3000,
                 num_processes=0, sigma=60,
-                experience_replay=0):
+                experience_replay=0,
+                seed=0):
 
-    voc = Vocabulary(init_from_file="data/Voc")
+    voc = Vocabulary(init_from_file="reinvent/data/Voc")
+
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
 
     start_time = time.time()
 
@@ -95,6 +100,7 @@ def train_agent(restore_prior_from='data/Prior.ckpt',
         # Get prior likelihood and score
         prior_likelihood, _ = Prior.likelihood(Variable(seqs))
         smiles = seq_to_smiles(seqs, voc)
+        print(smiles)
         # import pdb; pdb.set_trace()
         fitness = scoring_function(smiles)
         collector['smiles'] = smiles

@@ -276,7 +276,7 @@ class computation:
         return
     
 
-def get_properties(smi: str, verbose: bool=False, scratch='/tmp'): 
+def get_properties(smi: str, verbose: bool=True, scratch='/tmp'): 
     # Create and switch to temporary directory
     owd = Path.cwd()
     scratch_path = Path(scratch)
@@ -284,6 +284,7 @@ def get_properties(smi: str, verbose: bool=False, scratch='/tmp'):
     os.chdir(tmp_dir.name)
 
     system = lambda x: run_command(x, verbose)
+    # import pdb; pdb.set_trace()
     
     start_time = time.time()
     try: 
@@ -308,6 +309,8 @@ def get_properties(smi: str, verbose: bool=False, scratch='/tmp'):
     # Remove temporary directory
     os.chdir(owd)
     tmp_dir.cleanup()
+    if st > -100:
+        print(st, osc, combined)
 
     return st, osc, combined
 

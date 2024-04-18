@@ -38,7 +38,7 @@ if __name__ == "__main__":
 
     }
 
-    task_config = config['pce_pcbm_sas']
+    task_config = config['tadf_osc']
 
     data_path = os.path.join('.', 'datasets')
     filename = task_config['pretrain_dataset']  #'gdb13.csv'
@@ -72,7 +72,7 @@ if __name__ == "__main__":
 
     # import pdb; pdb.set_trace()
 
-    pretrain(num_epochs=num_epochs, verbose=verbose, train_ratio=train_ratio, save_dir='reinvent/data/'+task_config['pretrain_ckpt'])
+    # pretrain(num_epochs=num_epochs, verbose=verbose, train_ratio=train_ratio, save_dir='reinvent/data/'+task_config['pretrain_ckpt'])
     
     train_agent(
         restore_prior_from='reinvent/data/'+task_config['pretrain_ckpt'],
