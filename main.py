@@ -38,7 +38,7 @@ if __name__ == "__main__":
 
     }
 
-    task_config = config['tadf_osc']
+    task_config = config['pce_pcbm_sas']
 
     data_path = os.path.join('.', 'datasets')
     filename = task_config['pretrain_dataset']  #'gdb13.csv'
@@ -79,7 +79,7 @@ if __name__ == "__main__":
         restore_agent_from='reinvent/data/'+task_config['pretrain_ckpt'],
         scoring_function='tartarus_score',
         scoring_function_kwargs={'task':task_config['score'], 'obj_idx': task_config['obj_idx'], 'invalid_score': task_config['invalid_score']},
-        batch_size = 500,
+        batch_size = 100,
         n_steps = 10,
         num_processes = -1,
     )

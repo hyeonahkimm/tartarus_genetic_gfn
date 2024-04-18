@@ -66,7 +66,7 @@ def train_agent(restore_prior_from='data/Prior.ckpt',
     for param in Prior.rnn.parameters():
         param.requires_grad = False
 
-    optimizer = torch.optim.Adam(Agent.rnn.parameters(), lr=0.0005)
+    optimizer = torch.optim.Adam(Agent.rnn.parameters(), lr=learning_rate)
 
     # Scoring_function
     scoring_function = get_scoring_function(scoring_function=scoring_function, num_processes=num_processes,

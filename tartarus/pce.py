@@ -143,6 +143,7 @@ def get_properties(smile, verbose=False, scratch: str='/tmp'):
     pce_pcbm_sas = pce_1 - sas
     pce_pcdtbt_sas = pce_2 - sas
     
+    # print(pce_1, pce_2, sas)
     return pce_pcbm_sas, pce_pcdtbt_sas
 
 

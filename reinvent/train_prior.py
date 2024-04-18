@@ -23,11 +23,14 @@ parser.add_argument('--verbose', action='store_true', dest='verbose', default=Fa
     help='Toggle amount of printing. Turn on for progress bars.')
 
 
-def pretrain(num_epochs, verbose, train_ratio, restore_from=None, save_dir='data/Prior.ckpt'):
+def pretrain(num_epochs, verbose, train_ratio, restore_from=None, save_dir='data/Prior.ckpt', seed=0):
     """Trains the Prior RNN"""
 
     # Initialize early stopper
     early_stop = EarlyStopping(patience=10, min_delta=1e-7, mode='minimize')
+    
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
 
     # Read vocabulary from a file
     voc = Vocabulary(init_from_file="./reinvent/data/Voc")

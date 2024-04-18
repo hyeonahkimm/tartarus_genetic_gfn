@@ -20,8 +20,8 @@ class tartarus_score():
     def __init__(self):
         if self.task == 'pce':
             from tartarus import pce
-            self.fitness_function = pce.get_surrogate_properties
-            # self.fitness_function = pce.get_properties
+            # self.fitness_function = pce.get_surrogate_properties
+            self.fitness_function = pce.get_properties
         elif self.task == 'tadf':
             from tartarus import tadf
             self.fitness_function = tadf.get_properties

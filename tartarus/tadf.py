@@ -309,8 +309,8 @@ def get_properties(smi: str, verbose: bool=True, scratch='/tmp'):
     # Remove temporary directory
     os.chdir(owd)
     tmp_dir.cleanup()
-    if st > -100:
-        print(st, osc, combined)
+    # if st > -100:
+    #     print(st, osc, combined)
 
     return st, osc, combined
 
