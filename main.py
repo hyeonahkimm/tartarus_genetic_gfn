@@ -11,6 +11,8 @@ if __name__ == "__main__":
     config = {'pce_pcbm_sas': 
               {
         'pretrain_dataset': 'hce.csv',
+        'voc': "reinvent/data/Voc",
+        'moldata': "reinvent/data/mols_filtered.smi",
         'pretrain_ckpt': 'Prior_pce.ckpt',
         'score': 'pce',
         'obj_idx': 0,
@@ -21,6 +23,8 @@ if __name__ == "__main__":
         {
         'pretrain_dataset': 'gdb13.csv',
         'pretrain_ckpt': 'Prior_tadf.ckpt',
+        'voc': "reinvent/data/Voc_tadf",
+        'moldata': "reinvent/data/mols_filtered_tadf.smi",
         'score': 'tadf',
         'obj_idx': 1,
         'invalid_score': 0.,
@@ -30,6 +34,7 @@ if __name__ == "__main__":
         {
         'pretrain_dataset': 'docking.csv',
         'pretrain_ckpt': 'Prior_docking.ckpt',
+        'voc': "reinvent/data/Voc_docking",
         'score': 'docking_6y2f_qvina',
         'obj_idx': -1,
         'invalid_score': -1000,
@@ -38,7 +43,7 @@ if __name__ == "__main__":
 
     }
 
-    task_config = config['pce_pcbm_sas']
+    task_config = config['tadf_osc']
 
     data_path = os.path.join('.', 'datasets')
     filename = task_config['pretrain_dataset']  #'gdb13.csv'
@@ -63,8 +68,8 @@ if __name__ == "__main__":
     # print("Reading smiles...")
     # smiles_list = canonicalize_smiles_from_file(smiles_file)
     # print("Constructing vocabulary...")
-    # voc_chars = construct_vocabulary(smiles_list)
-    # write_smiles_to_file(smiles_list, "reinvent/data/mols_filtered.smi")
+    # voc_chars = construct_vocabulary(smiles_list, vocab_file=task_config['voc'])
+    # write_smiles_to_file(smiles_list, task_config['moldata'])
     
     num_epochs = 100
     verbose = False
@@ -72,15 +77,16 @@ if __name__ == "__main__":
 
     # import pdb; pdb.set_trace()
 
-    # pretrain(num_epochs=num_epochs, verbose=verbose, train_ratio=train_ratio, save_dir='reinvent/data/'+task_config['pretrain_ckpt'])
+    # pretrain(num_epochs=num_epochs, verbose=verbose, train_ratio=train_ratio, save_dir='reinvent/data/'+task_config['pretrain_ckpt'], vocab_file=task_config['voc'], moldata_from=task_config['moldata'])
     
     train_agent(
         restore_prior_from='reinvent/data/'+task_config['pretrain_ckpt'],
         restore_agent_from='reinvent/data/'+task_config['pretrain_ckpt'],
+        vocab_file= task_config['voc'],
         scoring_function='tartarus_score',
         scoring_function_kwargs={'task':task_config['score'], 'obj_idx': task_config['obj_idx'], 'invalid_score': task_config['invalid_score']},
-        batch_size = 100,
+        batch_size = 500,
         n_steps = 10,
-        num_processes = -1,
+        # num_processes = -1,
     )
     

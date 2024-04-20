@@ -23,7 +23,7 @@ parser.add_argument('--verbose', action='store_true', dest='verbose', default=Fa
     help='Toggle amount of printing. Turn on for progress bars.')
 
 
-def pretrain(num_epochs, verbose, train_ratio, restore_from=None, save_dir='data/Prior.ckpt', seed=0):
+def pretrain(num_epochs, verbose, train_ratio, restore_from=None, save_dir='data/Prior.ckpt', vocab_file="./reinvent/data/Voc", moldata_from="./reinvent/data/mols_filtered_tadf.smi", seed=0):
     """Trains the Prior RNN"""
 
     # Initialize early stopper
@@ -33,10 +33,10 @@ def pretrain(num_epochs, verbose, train_ratio, restore_from=None, save_dir='data
     torch.cuda.manual_seed_all(seed)
 
     # Read vocabulary from a file
-    voc = Vocabulary(init_from_file="./reinvent/data/Voc")
+    voc = Vocabulary(init_from_file=vocab_file)
 
     # Create a Dataset from a SMILES file
-    moldata = MolData("./reinvent/data/mols_filtered.smi", voc)
+    moldata = MolData(moldata_from, voc)
     train_size = int(len(moldata)*train_ratio)
     # train_size = int(100*train_ratio)
     train_set = torch.utils.data.Subset(moldata, range(0, train_size))

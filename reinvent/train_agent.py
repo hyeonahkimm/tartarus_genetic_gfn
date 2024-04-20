@@ -33,6 +33,7 @@ def normalize_score(current_fitness, all_fitness, threshold = 0.7):
 
 def train_agent(restore_prior_from='data/Prior.ckpt',
                 restore_agent_from='data/Prior.ckpt',
+                vocab_file= "reinvent/data/Voc",
                 scoring_function='tanimoto',
                 scoring_function_kwargs=None,
                 save_dir=None, learning_rate=0.0005,
@@ -41,7 +42,7 @@ def train_agent(restore_prior_from='data/Prior.ckpt',
                 experience_replay=0,
                 seed=0):
 
-    voc = Vocabulary(init_from_file="reinvent/data/Voc")
+    voc = Vocabulary(init_from_file=vocab_file)
 
     np.random.seed(seed)
     torch.manual_seed(seed)
@@ -100,7 +101,6 @@ def train_agent(restore_prior_from='data/Prior.ckpt',
         # Get prior likelihood and score
         prior_likelihood, _ = Prior.likelihood(Variable(seqs))
         smiles = seq_to_smiles(seqs, voc)
-        print(smiles)
         # import pdb; pdb.set_trace()
         fitness = scoring_function(smiles)
         collector['smiles'] = smiles

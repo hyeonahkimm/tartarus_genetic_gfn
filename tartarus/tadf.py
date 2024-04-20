@@ -17,7 +17,8 @@ import time
 from openbabel import pybel as pb
 import pathlib as pl
 
-crest = pl.Path(os.environ["XTBHOME"] / pl.Path("bin") / pl.Path("crest"))
+# crest = pl.Path(os.environ["XTBHOME"] / pl.Path("bin") / pl.Path("crest"))
+crest= "/home/hak/bin/crest"
 xtb = pl.Path(os.environ["XTBHOME"] / pl.Path("bin") / pl.Path("xtb"))
 
 import subprocess as sp
@@ -276,7 +277,7 @@ class computation:
         return
     
 
-def get_properties(smi: str, verbose: bool=True, scratch='/tmp'): 
+def get_properties(smi: str, verbose: bool=False, scratch='/tmp'): 
     # Create and switch to temporary directory
     owd = Path.cwd()
     scratch_path = Path(scratch)
@@ -284,7 +285,6 @@ def get_properties(smi: str, verbose: bool=True, scratch='/tmp'):
     os.chdir(tmp_dir.name)
 
     system = lambda x: run_command(x, verbose)
-    # import pdb; pdb.set_trace()
     
     start_time = time.time()
     try: 
@@ -303,10 +303,12 @@ def get_properties(smi: str, verbose: bool=True, scratch='/tmp'):
         else:
             st, osc, combined = -results_[1], results_[2], results_[2]-results_[1]-np.abs(results_[0]-3.2)
             
-    except: 
+    except Exception as e:
+        print(e) 
         st, osc, combined = -10**4, -10**4, -10**4
 
     # Remove temporary directory
+    # import pdb; pdb.set_trace()
     os.chdir(owd)
     tmp_dir.cleanup()
     # if st > -100:
