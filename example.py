@@ -2,6 +2,7 @@ from tartarus import pce
 from tartarus import tadf
 # from tartarus import docking
 # from tartarus import reactivity
+from time import perf_counter
 
 # test and print all objecties
 # dipm, gap, lumo, combined, pce_pcbm_sas, pce_pcdtbt_sas = pce.get_properties('c1sc(-c2[SiH2]c(cc2)-c2ccc(-c3scc4occc34)c3cscc23)c2Cccc12')
@@ -10,8 +11,10 @@ from tartarus import tadf
 # print(f'PCE2: {pce_pcdtbt_sas}')
 # print()
 
+start = perf_counter()
 st, osc, combined = tadf.get_properties('O=C1NC2=C(O1)C1=C(N=CO1)C2=O')
 print('******* TADF *******')
+print(f'Evaluation time: {perf_counter() - start}')
 print(f'Singlet-triplet: {st}')
 print(f'Oscillator strength: {osc}')
 print(f'Combined obj: {combined}')

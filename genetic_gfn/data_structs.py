@@ -122,9 +122,12 @@ class Experience(object):
         self.memory = []
         self.max_size = max_size
         self.voc = voc
+        self.mol_buffer = {}
 
     def add_experience(self, experience):
         """Experience should be a list of (smiles, score, (n_atoms)) tuples"""
+        if exp[0] not in self.mol_buffer.keys():
+            self.mol_buffer[exp[0]] = [exp[1]]
         self.memory.extend(experience)
         if len(self.memory)>self.max_size:
             # Remove duplicates

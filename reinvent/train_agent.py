@@ -170,7 +170,7 @@ def train_agent(restore_prior_from='data/Prior.ckpt',
         print("\n       Step {}   Fraction valid SMILES: {:4.1f}  Time elapsed: {:.2f}h Time left: {:.2f}h".format(
               step, fraction_valid_smiles(smiles) * 100, time_elapsed, time_left))
         print("  Agent    Prior   Target   Score   Fitness             SMILES")
-        for i in range(10):
+        for i in range(5):
             print(" {:6.2f}   {:6.2f}  {:6.2f}  {:6.2f}   {:6.2f}     {}".format(agent_likelihood[i],
                                                                        prior_likelihood[i],
                                                                        augmented_likelihood[i],
@@ -188,7 +188,11 @@ def train_agent(restore_prior_from='data/Prior.ckpt',
     if not save_dir:
         save_dir = 'data/results/run_' + time.strftime("%Y-%m-%d-%H_%M_%S", time.localtime())
     os.makedirs(save_dir)
-    copyfile('train_agent.py', os.path.join(save_dir, "train_agent.py"))
+    # import pdb; pdb.set_trace()
+    try:
+        copyfile('./main_reinvent.py', os.path.join(save_dir, "train_main.py"))
+    except:
+        pass
 
     results = results.reset_index(drop=True)
     best_results = best_results.reset_index(drop=True)

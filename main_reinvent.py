@@ -52,9 +52,9 @@ if __name__ == "__main__":
     smile_name = 'smiles'
 
     # dataset load
-    fname = os.path.join(data_path, filename)
-    data = pd.read_csv(fname, sep=sep, header=header)
-    smiles = data[smile_name]
+    # fname = os.path.join(data_path, filename)
+    # data = pd.read_csv(fname, sep=sep, header=header)
+    # smiles = data[smile_name]
 
     # if not os.path.isdir('reinvent/data'):
     #     os.mkdir('./reinvent/data')

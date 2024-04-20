@@ -11,15 +11,30 @@ from rdkit import Chem, rdBase
 from rdkit.Chem.rdchem import Mol
 rdBase.DisableLog('rdApp.error')
 
-import main.genetic_gfn.genetic_operator.crossover as co
-import main.genetic_gfn.genetic_operator.mutate as mu
+import genetic_gfn.genetic_operator.crossover as co
+import genetic_gfn.genetic_operator.mutate as mu
 
 import gc
 
 
 MINIMUM = 1e-10
 
-def make_mating_pool(population_mol: List[Mol], population_scores, population_size: int, rank_coefficient=0.01):
+
+def select_pop(population_mol: List[str], population_scores, population_size: int, rank_coefficient=0.01):
+    scores_np = np.array(population_scores)
+    ranks = np.argsort(np.argsort(-1 * scores_np))
+    weights = 1.0 / (rank_coefficient * len(scores_np) + ranks)
+    
+    indices = list(torch.utils.data.WeightedRandomSampler(
+        weights=weights, num_samples=population_size, replacement=False
+        ))
+    mating_pool = [population_mol[i] for i in indices if population_mol[i] is not None]
+    mating_pool_score = [population_scores[i] for i in indices if population_mol[i] is not None]
+    
+    return mating_pool, mating_pool_score
+
+
+def make_mating_pool(population_mol: List[Mol], population_scores, population_size: int, rank_coefficient=0.01, replacement=True):
     """
     Given a population of RDKit Mol and their scores, sample a list of the same size
     with replacement using the population_scores as weights
@@ -81,14 +96,17 @@ class GeneticOperatorHandler:
         # print(mating_pool)
         if mutation_rate is None:
             mutation_rate = self.mutation_rate
-        population_mol = [Chem.MolFromSmiles(s) for s in mating_pool[0]]
-        population_scores = mating_pool[1]
+        # import pdb; pdb.set_trace()
+        population_smi, population_scores = select_pop(mating_pool[0], mating_pool[1], self.population_size, rank_coefficient=rank_coefficient)
+        population_mol = [Chem.MolFromSmiles(s) for s in population_smi]
+        # population_mol = [Chem.MolFromSmiles(s) for s in mating_pool[0]]
+        # population_scores = mating_pool[1]
 
-        cross_mating_pool, cross_mating_scores = make_mating_pool(population_mol, population_scores, self.population_size, rank_coefficient)
+        cross_mating_pool, cross_mating_scores = make_mating_pool(population_mol, population_scores, query_size, rank_coefficient)
 
         offspring_mol = pool(delayed(reproduce)(cross_mating_pool, mutation_rate) for _ in range(query_size))
-        new_mating_pool = cross_mating_pool
-        new_mating_scores = cross_mating_scores
+        # new_mating_pool = cross_mating_pool
+        # new_mating_scores = cross_mating_scores
 
         smis, n_atoms = [], []
         for m in offspring_mol:
@@ -103,13 +121,13 @@ class GeneticOperatorHandler:
 
         gc.collect()
 
-        pop_valid_smis, pop_valid_scores = [], []
-        for m, s in zip(new_mating_pool, new_mating_scores):
-            try:
-                # pop_valid_smis.append(Chem.MolToSmiles(m))
-                pop_valid_smis.append(Chem.MolToSmiles(m))
-                pop_valid_scores.append(s)
-            except:
-                pass
+        # pop_valid_smis, pop_valid_scores = [], []
+        # for m, s in zip(population_smi, population_scores):  #(new_mating_pool, new_mating_scores):
+        #     try:
+        #         # pop_valid_smis.append(Chem.MolToSmiles(m))
+        #         pop_valid_smis.append(Chem.MolToSmiles(m))
+        #         pop_valid_scores.append(s)
+        #     except:
+        #         pass
         
-        return smis, n_atoms, pop_valid_smis, pop_valid_scores
+        return smis, n_atoms, population_smi, population_scores  #pop_valid_smis, pop_valid_scores

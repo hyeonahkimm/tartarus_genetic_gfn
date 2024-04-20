@@ -18,7 +18,7 @@ from openbabel import pybel as pb
 import pathlib as pl
 
 # crest = pl.Path(os.environ["XTBHOME"] / pl.Path("bin") / pl.Path("crest"))
-crest= "/home/hak/bin/crest"
+crest= pl.Path(os.environ["CRESTPATH"])
 xtb = pl.Path(os.environ["XTBHOME"] / pl.Path("bin") / pl.Path("xtb"))
 
 import subprocess as sp
