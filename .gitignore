@@ -152,7 +152,7 @@ cython_debug/
 #.idea/
 
 reinvent/data/
-data/
+./data/
 log/
 outputs/
 wandb/

@@ -247,6 +247,7 @@ class computation:
     def pyscf(self):
         with suppress_output(self.verbose):
             # TD-DFT single point
+            # import pdb; pdb.set_trace()
             self.mole = gto.Mole()
             self.mole.atom = self.file
             self.mole.basis = '6-31G*'

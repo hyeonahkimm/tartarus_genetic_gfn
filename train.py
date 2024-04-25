@@ -206,24 +206,36 @@ class Genetic_GFN_trainer():
                     optimizer.step()
 
             # import pdb; pdb.set_trace()
+            print(self.memory["scores"])
+            print(self.memory["all_scores"])
             if len(self.memory) > 100:
 
                 log = {'top-1': self.memory["scores"][0], 
                        'top-10': np.mean(np.array(self.memory["scores"][:10])),
                        'top-100': np.mean(np.array(self.memory["scores"][:100])),
                     #    'int_div': int_div(list(self.memory["smiles"][:100])),
-                       'top-1 docking': self.memory["all_scores"][0][0],
-                       'top-10 docking': np.stack(np.array(self.memory["all_scores"][:10]))[:, 0].mean(),
-                       'top-100 docking': np.stack(np.array(self.memory["all_scores"][:100]))[:, 0].mean(),
+                    #    'top-1 docking': self.memory["all_scores"][0][0],
+                    #    'top-10 docking': np.stack(np.array(self.memory["all_scores"][:10]))[:, 0].mean(),
+                    #    'top-100 docking': np.stack(np.array(self.memory["all_scores"][:100]))[:, 0].mean(),
                        'step_': step}
                 
-                if num_metric > 2:
-                    log['top-1 qed'] = self.memory["all_scores"][0][1]
-                    log['top-10 qed'] = np.stack(np.array(self.memory["all_scores"][:10]))[:, 1].mean()
-                    log['top-100 qed'] = np.stack(np.array(self.memory["all_scores"][:100]))[:, 1].mean()
-                    log['top-1 sa'] = self.memory["all_scores"][0][2]
-                    log['top-10 sa'] = np.stack(np.array(self.memory["all_scores"][:10]))[:, 2].mean()
-                    log['top-100 sa'] = np.stack(np.array(self.memory["all_scores"][:100]))[:, 2].mean()
+                
+                if self.oracle.sa.startswith('tadf'):
+                    log['top-1 st'] = self.memory["all_scores"][0][0]
+                    log['top-10 st'] = np.stack(np.array(self.memory["all_scores"][:10]))[:, 0].mean()
+                    log['top-100 st'] = np.stack(np.array(self.memory["all_scores"][:100]))[:, 0].mean()
+                    log['top-1 osc'] = self.memory["all_scores"][0][1]
+                    log['top-10 osc'] = np.stack(np.array(self.memory["all_scores"][:10]))[:, 1].mean()
+                    log['top-100 osc'] = np.stack(np.array(self.memory["all_scores"][:100]))[:, 1].mean()
+                    log['top-1 combined'] = self.memory["all_scores"][0][2]
+                    log['top-10 combined'] = np.stack(np.array(self.memory["all_scores"][:10]))[:, 2].mean()
+                    log['top-100 combined'] = np.stack(np.array(self.memory["all_scores"][:100]))[:, 2].mean()
+
+                elif self.oracle.sa.startswith('docking'):
+                    log['top-1 docking'] = self.memory["all_scores"][0][0]
+                    log['top-10 docking'] = np.stack(np.array(self.memory["all_scores"][:10]))[:, 0].mean()
+                    log['top-100 docking'] = np.stack(np.array(self.memory["all_scores"][:100]))[:, 0].mean()
+                
                 
                 if self.wandb == 'online':
                     wandb.log(log)

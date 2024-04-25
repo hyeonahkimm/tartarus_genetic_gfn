@@ -89,6 +89,7 @@ def get_scores_subproc(smiles, mode):
         for i in range(len(smiles)):
             if mols[i] != None:
                 st, osc, combined = tadf.get_properties(smiles[i])
+                import pdb; pdb.set_trace()
                 scores += [sigmoid_transformation(combined, mode), st, osc, combined]
             else:
                 scores += [-1.0, -1.0, -1.0, -1.0]
@@ -167,7 +168,7 @@ def sigmoid_transformation(original_score, mode):
         _high = 3.
         _k = 0.25
         minimize = False
-    elif mode == "docking_1syh_qvina":
+    elif mode.startswith("docking"):
         _low = -12
         _high = -8
         _k = 0.25
