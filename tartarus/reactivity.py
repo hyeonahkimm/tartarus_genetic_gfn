@@ -247,6 +247,7 @@ def barrier_from_smiles(
         "coordsys": "cart",
     }
 
+    # TODO: check from here!
     kw_opt = {"conv_params": conv_params, "maxsteps": maxsteps}
     results = opt_ts_python(
         elements, [coordinates_r, coordinates_p], coordinates_guess, kw_opt=kw_opt
@@ -336,9 +337,11 @@ def run_reaction(
 
     # Run the calculation
     failed = False
+    # import pdb; pdb.set_trace()
     try: 
         activation_energy, reaction_energy, smiles_stereo = barrier_from_smiles(smiles)
-    except Exception:
+    except Exception as e:
+        print(e)
         print('Reactivity simulation has failed for this molecule.')
         failed = True
         smiles_stereo = None

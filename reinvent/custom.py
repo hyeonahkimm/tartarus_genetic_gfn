@@ -43,17 +43,22 @@ class tartarus_score():
             return self.invalid_score
         if self.task.startswith('docking'):
             _, receptor, program = self.task.split('_')
-            return (-1) * self.fitness_function(smi, receptor, docking_program=program)
+            score = self.fitness_function(smi, receptor, docking_program=program)
+            # if score < -100:
+            #     score = 0
+            # else:
+            #     score *= -1
+            return (-1) * score
         else:
             return self.fitness_function(smi)[self.obj_idx]
 
 
 def fitness_function(smi):
     try:
-        # mol = Chem.MolFromSmiles(smi)
-        pce_pcbm_sas, pce_pcdtbt_sas = pce.get_properties(smi)
-        # log_P = Descriptors.MolLogP(mol)
-        return pce_pcbm_sas  #log_P
+        # pce_pcbm_sas, pce_pcdtbt_sas = pce.get_properties(smi)
+        mol = Chem.MolFromSmiles(smi)
+        log_P = Descriptors.MolLogP(mol)
+        return log_P
     
     except:
         return None
@@ -64,6 +69,7 @@ class custom_score():
         pass
 
     def __call__(self, smi):
+        import pdb; pdb.set_trace()
         return fitness_function(smi)
 
 class EarlyStopping():

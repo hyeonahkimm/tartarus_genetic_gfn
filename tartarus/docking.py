@@ -5,7 +5,7 @@ Created on Fri Jun  9 12:58:37 2023
 @author: aksha
 """
 
-import os 
+import os
 import uuid
 import time
 import subprocess
@@ -36,7 +36,6 @@ def check_energy(lig_):
     return total_energy
 
 
-    
 
 def run_docking_1syh(lig_location, out_location, method='qvina'): 
     """
@@ -53,9 +52,9 @@ def run_docking_1syh(lig_location, out_location, method='qvina'):
     (float) Docking score.
     """
     if method == 'qvina': 
-        command_run = subprocess.run(["./tartarus/data/qvina", "--receptor", "./docking_structures/1syh/prot.pdbqt", "--ligand", lig_location, "--center_x", "21.492800140380858", "--center_y", "13.457733376820881", "--center_z", "23.175899950663247", "--size_x", "20", "--size_y", "20", "--size_z", "20", "--exhaustiveness", "10", "--out", out_location], capture_output=True)
+        command_run = subprocess.run(["./tartarus/data/qvina", "--receptor", "./tartarus/docking_structures/1syh/prot.pdbqt", "--ligand", lig_location, "--center_x", "21.492800140380858", "--center_y", "13.457733376820881", "--center_z", "23.175899950663247", "--size_x", "20", "--size_y", "20", "--size_z", "20", "--exhaustiveness", "10", "--out", out_location], capture_output=True)
     elif method == 'smina': 
-        command_run = subprocess.run(["./tartarus/data/smina", "--receptor", "./docking_structures/1syh/prot.pdbqt", "--ligand", lig_location, "--center_x", "21.492800140380858", "--center_y", "13.457733376820881", "--center_z", "23.175899950663247", "--size_x", "20", "--size_y", "20", "--size_z", "20", "--exhaustiveness", "100", "--out", out_location], capture_output=True)
+        command_run = subprocess.run(["./tartarus/data/smina", "--receptor", "./tartarus/docking_structures/1syh/prot.pdbqt", "--ligand", lig_location, "--center_x", "21.492800140380858", "--center_y", "13.457733376820881", "--center_z", "23.175899950663247", "--size_x", "20", "--size_y", "20", "--size_z", "20", "--exhaustiveness", "100", "--out", out_location], capture_output=True)
     else: 
         raise Exception('Possible docking softwares: qvina/smina')
 
@@ -100,9 +99,9 @@ def run_docking_4lde(lig_location, out_location, method='qvina'):
     (float) Docking score.
     """
     if method == 'qvina': 
-        command_run = subprocess.run(["./tartarus/data/qvina", "--receptor", "./docking_structures/4lde/prot.pdbqt", "--ligand", lig_location, "--center_x", "-2.942962976793448", "--center_y", "-12.915592617458767", "--center_z", "-50.99233344749168", "--size_x", "20", "--size_y", "20", "--size_z", "20", "--exhaustiveness", "10", "--out", out_location], capture_output=True)
+        command_run = subprocess.run(["./tartarus/data/qvina", "--receptor", "./tartarus/docking_structures/4lde/prot.pdbqt", "--ligand", lig_location, "--center_x", "-2.942962976793448", "--center_y", "-12.915592617458767", "--center_z", "-50.99233344749168", "--size_x", "20", "--size_y", "20", "--size_z", "20", "--exhaustiveness", "10", "--out", out_location], capture_output=True)
     elif method == 'smina': 
-        command_run = subprocess.run(["./tartarus/data/smina", "--receptor", "./docking_structures/4lde/prot.pdbqt", "--ligand", lig_location, "--center_x", "-2.942962976793448", "--center_y", "-12.915592617458767", "--center_z", "-50.99233344749168", "--size_x", "20", "--size_y", "20", "--size_z", "20", "--exhaustiveness", "100", "--out", out_location], capture_output=True)
+        command_run = subprocess.run(["./tartarus/data/smina", "--receptor", "./tartarus/docking_structures/4lde/prot.pdbqt", "--ligand", lig_location, "--center_x", "-2.942962976793448", "--center_y", "-12.915592617458767", "--center_z", "-50.99233344749168", "--size_x", "20", "--size_y", "20", "--size_z", "20", "--exhaustiveness", "100", "--out", out_location], capture_output=True)
     else: 
         raise Exception('Possible docking softwares: qvina/smina')
 
@@ -147,9 +146,9 @@ def run_docking_6y2f(lig_location, out_location, method='qvina'):
     (float) Docking score.
     """
     if method == 'qvina': 
-        command_run = subprocess.run(["./tartarus/data/qvina", "--receptor", "./docking_structures/6y2f/prot.pdbqt", "--ligand", lig_location, "--center_x", "11.026168696851615", "--center_y", "-0.6082891440804464", "--center_z", "20.840999947973046", "--size_x", "10", "--size_y", "10", "--size_z", "10", "--exhaustiveness", "10", "--out", out_location], capture_output=True)
+        command_run = subprocess.run(["./tartarus/data/qvina", "--receptor", "./tartarus/docking_structures/6y2f/prot.pdbqt", "--ligand", lig_location, "--center_x", "11.026168696851615", "--center_y", "-0.6082891440804464", "--center_z", "20.840999947973046", "--size_x", "10", "--size_y", "10", "--size_z", "10", "--exhaustiveness", "10", "--out", out_location], capture_output=True)
     elif method == 'smina': 
-        command_run = subprocess.run(["./tartarus/data/smina", "--receptor", "./docking_structures/6y2f/prot.pdbqt", "--ligand", lig_location, "--center_x", "11.026168696851615", "--center_y", "-0.6082891440804464", "--center_z", "20.840999947973046", "--size_x", "10", "--size_y", "10", "--size_z", "10", "--exhaustiveness", "100", "--out", out_location], capture_output=True)
+        command_run = subprocess.run(["./tartarus/data/smina", "--receptor", "./tartarus/docking_structures/6y2f/prot.pdbqt", "--ligand", lig_location, "--center_x", "11.026168696851615", "--center_y", "-0.6082891440804464", "--center_z", "20.840999947973046", "--size_x", "10", "--size_y", "10", "--size_z", "10", "--exhaustiveness", "100", "--out", out_location], capture_output=True)
     else: 
         raise Exception('Possible docking softwares: qvina/smina')
 
@@ -250,12 +249,17 @@ def perform_calc_single(smi, receptor_type, docking_program='qvina'):
             return 10**4
     
         # import pdb; pdb.set_trace()
-        os.system('rm {}'.format(output_filename))
-        # os.system('rm {} {}'.format(output_filename, out_location))
+        # os.system('rm {}'.format(output_filename))
+        try:
+            os.system('rm {} {}'.format(output_filename, out_location))
+        except:
+            os.system('rm {}'.format(output_filename))
         
     except: 
-        os.system('rm {}'.format(output_filename))
-        # os.system('rm {} {}'.format(output_filename, out_location))
+        try:
+            os.system('rm {} {}'.format(output_filename, out_location))
+        except:
+            os.system('rm {}'.format(output_filename))
         return 10**4
 
     return score_

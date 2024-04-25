@@ -35,15 +35,16 @@ if __name__ == "__main__":
         'pretrain_dataset': 'docking.csv',
         'pretrain_ckpt': 'Prior_docking.ckpt',
         'voc': "reinvent/data/Voc_docking",
+        'moldata': "reinvent/data/mols_filtered_docking.smi",
         'score': 'docking_6y2f_qvina',
         'obj_idx': -1,
-        'invalid_score': -1000,
+        'invalid_score': -10000,
         'coefficient': -1  # minimize
         },
 
     }
 
-    task_config = config['tadf_osc']
+    task_config = config['6y2f_qvina']
 
     data_path = os.path.join('.', 'datasets')
     filename = task_config['pretrain_dataset']  #'gdb13.csv'

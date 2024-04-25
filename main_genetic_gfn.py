@@ -52,24 +52,24 @@ if __name__ == "__main__":
     smile_name = 'smiles'
 
     # dataset load
-    # fname = os.path.join(data_path, filename)
-    # data = pd.read_csv(fname, sep=sep, header=header)
-    # smiles = data[smile_name]
+    fname = os.path.join(data_path, filename)
+    data = pd.read_csv(fname, sep=sep, header=header)
+    smiles = data[smile_name]
 
-    # if not os.path.isdir('reinvent/data'):
-    #     os.mkdir('./reinvent/data')
+    if not os.path.isdir('reinvent/data'):
+        os.mkdir('./reinvent/data')
 
-    # # create smi file
-    # with open(os.path.join('reinvent/data', 'data.smi'), 'w') as f:
-    #     for smi in smiles:
-    #         f.write(smi+'\n')
+    # create smi file
+    with open(os.path.join('reinvent/data', 'data.smi'), 'w') as f:
+        for smi in smiles:
+            f.write(smi+'\n')
 
-    # smiles_file = 'reinvent/data/data.smi'
-    # print("Reading smiles...")
-    # smiles_list = canonicalize_smiles_from_file(smiles_file)
-    # print("Constructing vocabulary...")
-    # voc_chars = construct_vocabulary(smiles_list, vocab_file=task_config['voc'])
-    # write_smiles_to_file(smiles_list, task_config['moldata'])
+    smiles_file = 'reinvent/data/data.smi'
+    print("Reading smiles...")
+    smiles_list = canonicalize_smiles_from_file(smiles_file)
+    print("Constructing vocabulary...")
+    voc_chars = construct_vocabulary(smiles_list, vocab_file=task_config['voc'])
+    write_smiles_to_file(smiles_list, task_config['moldata'])
     
     num_epochs = 100
     verbose = False

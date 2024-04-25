@@ -122,12 +122,9 @@ class Experience(object):
         self.memory = []
         self.max_size = max_size
         self.voc = voc
-        self.mol_buffer = {}
 
     def add_experience(self, experience):
         """Experience should be a list of (smiles, score, (n_atoms)) tuples"""
-        if exp[0] not in self.mol_buffer.keys():
-            self.mol_buffer[exp[0]] = [exp[1]]
         self.memory.extend(experience)
         if len(self.memory)>self.max_size:
             # Remove duplicates
@@ -150,7 +147,9 @@ class Experience(object):
         if len(self.memory) < n:
             raise IndexError('Size of memory ({}) is less than requested sample ({})'.format(len(self), n))
         else:
-            scores = [x[1]+1e-10 for x in self.memory]
+            scores = np.array([x[1] for x in self.memory])
+            scores += max((-1) * scores.min(), 1e-10)
+            # scores = [x[1]+1e-10 for x in self.memory]
             sample = np.random.choice(len(self), size=n, replace=False, p=scores/np.sum(scores))
             sample = [self.memory[i] for i in sample]
             smiles = [x[0] for x in sample]

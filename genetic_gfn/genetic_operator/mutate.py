@@ -4,7 +4,7 @@ import numpy as np
 from rdkit import Chem, rdBase
 from rdkit.Chem import AllChem
 
-import main.genetic_gfn.genetic_operator.crossover as co
+import genetic_gfn.genetic_operator.crossover as co
 
 rdBase.DisableLog("rdApp.error")
 

@@ -153,3 +153,7 @@ cython_debug/
 
 reinvent/data/
 data/
+log/
+outputs/
+wandb/
+lig_*
